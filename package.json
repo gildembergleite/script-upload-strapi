@@ -1,0 +1,16 @@
+{
+  "name": "script-upload-strapi",
+  "module": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Gildemberg Leite <gildembergleite@gmail.com> (http://gildembergleite@gmail.com/)",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "8.55.0"
+  }
+}
