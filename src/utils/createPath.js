@@ -9,7 +9,6 @@ export async function createPath() {
 
   try {
     await access(path, fs.constants.F_OK)
-    console.log('Pasta já existe!')
   } catch (err) {
     try {
       await mkdir(path)
