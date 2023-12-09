@@ -1,7 +1,7 @@
 import { createNewEntry } from './utils/creteNewEntry.js'
 
 export async function processDataWithDelay(delayTime) {
-  let i = 0
+  let i = 158
   let shouldContinue = true
 
   while (shouldContinue) {
@@ -28,4 +28,4 @@ export async function processDataWithDelay(delayTime) {
   }
 }
 
-await processDataWithDelay(0, 0, 500)
+await processDataWithDelay(500)
