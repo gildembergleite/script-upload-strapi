@@ -1,7 +1,7 @@
 export async function processDataWithDelay(startIndex, endIndex, delayTime) {
   for (let i = startIndex; i <= endIndex; i += 3) {
     try {
-      const response = await fetch(`https://www.ceramicaportinari.com.br/pt/downloads/load_more_collections/${i}`)
+      const response = await fetch(`${process.env.BASE_URL}${i}`)
       const data = await response.json()
 
       for (const item of data.payload) {
@@ -14,7 +14,7 @@ export async function processDataWithDelay(startIndex, endIndex, delayTime) {
           }
         }
 
-        const strapiResponse = await fetch('https://portinari-site-strapi.prd.cloud.dex.co/api/downloads', {
+        const strapiResponse = await fetch(process.env.DOWNLOAD_ENDPOINT, {
           method: 'POST',
           body: JSON.stringify(formData),
           headers: {
