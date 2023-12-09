@@ -1,9 +1,31 @@
-import { createPath } from './createPath.js'
 import { downloadFile } from './downloadFile.js'
+import { uploadImage } from './uploadImage.js'
+import { uploadPdf } from './uploadPdf.js'
 
-export async function createNewEntry(item) {
+export async function createNewEntry(item, order) {
   try {
-    await createPath()
+
+    const formData = {
+      data: {
+        Ordem: Number(order),
+        Titulo: item.api_name,
+        download_categoria: { id: 2 },
+      },
+    }
+
+    const response = await fetch(process.env.DOWNLOAD_ENDPOINT, {
+      method: 'POST',
+      body: JSON.stringify(formData),
+      headers: { 'Content-Type': 'application/json' },
+    })
+
+    const RESPONSE_DATA = await response.json()
+
+    console.log(
+      `\nStatus: ${response.statusText} | New entry: ${item.api_name}\n`
+    )
+
+    const ENTRY_ID = RESPONSE_DATA.data.id
 
     const imagePath = `./downloads/${item.api_id}.jpg`
     const pdfPath = `./downloads/${item.api_id}.pdf`
@@ -13,22 +35,8 @@ export async function createNewEntry(item) {
       downloadFile(item.link, pdfPath),
     ])
 
-    const formData = {
-      data: {
-        Ordem: Number(item.id),
-        Titulo: item.api_name,
-        download_categoria: { id: 2 }
-      }
-    }
-
-    const response = await fetch(process.env.DOWNLOAD_ENDPOINT, {
-      method: 'POST',
-      body: JSON.stringify(formData),
-      headers: { 'Content-Type': 'application/json' },
-    })
-
-    console.log(`\nStatus code: ${response.status}`)
-    console.log(`FormData: ${JSON.stringify(formData.data)}\n`)
+    await uploadImage(ENTRY_ID, item.api_id)
+    await uploadPdf(ENTRY_ID, item.api_id)
   } catch (error) {
     console.error('Error occurred:', error)
   }

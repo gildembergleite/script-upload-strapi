@@ -16,7 +16,7 @@ export async function uploadPdf(refID, fileName) {
       body: formData,
     })
     
-    console.log(`Status code: ${response.status} | File: ./downloads/${fileName}.pdf`)
+    console.log(`Status code: ${response.status} | Upload File: ./downloads/${fileName}.pdf`)
     return await response.json()
   } catch (error) {
     throw new Error('Erro ao enviar arquivo para o Strapi:', error)

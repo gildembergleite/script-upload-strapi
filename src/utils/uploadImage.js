@@ -2,6 +2,7 @@ import fs from 'node:fs'
 
 export async function uploadImage(refID, fileName) {
   try {
+    console.log('filename', `./downloads/${fileName}.jpg`)
     const buffer = fs.readFileSync(`./downloads/${fileName}.jpg`)
     const blob = new Blob([buffer], { type: 'image/jpeg' })
     
@@ -16,7 +17,7 @@ export async function uploadImage(refID, fileName) {
       body: formData,
     })
     
-    console.log(`Status code: ${response.status} | File: ./downloads/${fileName}.jpg`)
+    console.log(`Status code: ${response.status} | Upload File: ./downloads/${fileName}.jpg`)
     return await response.json()
   } catch (error) {
     throw new Error('Erro ao enviar arquivo para o Strapi:', error)

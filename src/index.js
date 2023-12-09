@@ -1,12 +1,18 @@
+import { createPath } from './utils/createPath.js'
 import { createNewEntry } from './utils/creteNewEntry.js'
 
 export async function processDataWithDelay(delayTime) {
-  let i = 158
+
+  // setup environment
+  await createPath()
+
+  let index = 0
+  let order = 0
   let shouldContinue = true
 
   while (shouldContinue) {
     try {
-      const response = await fetch(`${process.env.COLLECTIONS_URL}${i}`)
+      const response = await fetch(`${process.env.COLLECTIONS_URL}${index}`)
       const data = await response.json()
 
       if (data === null || data.payload.length === 0) {
@@ -15,11 +21,13 @@ export async function processDataWithDelay(delayTime) {
       }
 
       for (const item of data.payload) {
-        await createNewEntry(item)
+        await createNewEntry(item, order)
+        console.log('Cooldown...', delayTime)
         await new Promise(resolve => setTimeout(resolve, delayTime))
+        order += 1
       }
 
-      i += 3
+      index += 3
     } catch (error) {
       console.error(error)
       shouldContinue = false
@@ -28,4 +36,4 @@ export async function processDataWithDelay(delayTime) {
   }
 }
 
-await processDataWithDelay(500)
+await processDataWithDelay(3000)
