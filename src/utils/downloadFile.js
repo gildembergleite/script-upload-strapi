@@ -1,7 +1,7 @@
-import https from 'https'
-import fs from 'fs'
+import https from 'node:https'
+import fs from 'node:fs'
 
-export function downloadImage(url, destination) {
+export function downloadFile(url, destination) {
   return new Promise((resolve, reject) => {
     const file = fs.createWriteStream(destination)
     

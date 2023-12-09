@@ -1,4 +1,4 @@
-import { createNewEntry } from './creteNewEntry.js'
+import { createNewEntry } from './utils/creteNewEntry.js'
 
 export async function processDataWithDelay(startIndex, endIndex, delayTime) {
   for (let i = startIndex; i <= endIndex; i += 3) {
