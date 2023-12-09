@@ -1,7 +1,7 @@
 import https from 'https'
 import fs from 'fs'
 
-export function downloadFile(url, destination) {
+export function downloadImage(url, destination) {
   return new Promise((resolve, reject) => {
     const file = fs.createWriteStream(destination)
     

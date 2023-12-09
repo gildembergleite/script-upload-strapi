@@ -9,7 +9,7 @@ export async function uploadImage(refID, fileName) {
     formData.append('ref', 'api::download.download')
     formData.append('refId', refID)
     formData.append('field', 'Thumb')
-    formData.append('files', blob, fileName)
+    formData.append('files', blob, `${fileName}.jpg`)
 
     const response = await fetch(process.env.UPLOAD_ENDPOINT, {
       method: 'POST',

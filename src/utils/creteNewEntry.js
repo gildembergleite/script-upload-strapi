@@ -1,12 +1,13 @@
-import { downloadFile } from './downloadFile.js'
+import { downloadImage } from './image/downloadImage.js'
+import { downloadPdf } from './pdf/downloadPdf.js'
 
 export async function createNewEntry(item) {
   const imagePath = `./downloads/${item.api_id}.jpg`
   const pdfPath = `./downloads/${item.api_id}.pdf`
 
-  await downloadFile(`${process.env.BASE_URL}${item.img}`, imagePath)
-  await downloadFile(`${process.env.BASE_URL}/${item.catalog}`, pdfPath)
-        
+  await downloadImage(`${process.env.BASE_URL}${item.img}`, imagePath)
+  await downloadPdf(item.link, pdfPath)
+      
   const formData = {
     data: {
       Ordem: Number(item.id),
