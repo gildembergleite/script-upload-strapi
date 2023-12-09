@@ -6,9 +6,7 @@ export function downloadFile(url, destination) {
     const file = fs.createWriteStream(destination)
     
     const options = {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
-      }
+      headers: { 'User-Agent': process.env.USER_AGENT_CONTENT }
     }
     
     https.get(url, options, (response) => {
@@ -17,6 +15,7 @@ export function downloadFile(url, destination) {
       file.on('finish', () => {
         file.close(resolve(true))
       })
+      console.log('Download file: ', destination)
 
     }).on('error', (error) => {
       fs.unlink(destination, () => reject(error))
