@@ -1,4 +1,4 @@
-import { createNewEntry } from './utils/creteNewEntry.js'
+import { createNewEntry } from './utils/creteNewEntry'
 
 export async function processDataWithDelay(startIndex, endIndex, delayTime) {
   for (let i = startIndex; i <= endIndex; i += 3) {
@@ -7,9 +7,7 @@ export async function processDataWithDelay(startIndex, endIndex, delayTime) {
       const data = await response.json()
 
       for (const item of data.payload) {
-
         await createNewEntry(item)
-
         await new Promise(resolve => setTimeout(resolve, delayTime))
       }
     } catch (error) {
