@@ -27,7 +27,8 @@ export async function createNewEntry(item) {
       headers: { 'Content-Type': 'application/json' },
     })
 
-    console.log(`\nStatus: ${response.statusText} | New entry: ${item.api_name}\n`)
+    console.log(`\nStatus code: ${response.status}`)
+    console.log(`FormData: ${JSON.stringify(formData.data)}\n`)
   } catch (error) {
     console.error('Error occurred:', error)
   }
