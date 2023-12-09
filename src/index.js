@@ -1,17 +1,29 @@
-import { createNewEntry } from './utils/creteNewEntry'
+import { createNewEntry } from './utils/creteNewEntry.js'
 
-export async function processDataWithDelay(startIndex, endIndex, delayTime) {
-  for (let i = startIndex; i <= endIndex; i += 3) {
+export async function processDataWithDelay(delayTime) {
+  let i = 0
+  let shouldContinue = true
+
+  while (shouldContinue) {
     try {
       const response = await fetch(`${process.env.COLLECTIONS_URL}${i}`)
       const data = await response.json()
+
+      if (data === null || data.payload.length === 0) {
+        shouldContinue = false
+        break
+      }
 
       for (const item of data.payload) {
         await createNewEntry(item)
         await new Promise(resolve => setTimeout(resolve, delayTime))
       }
+
+      i += 3
     } catch (error) {
       console.error(error)
+      shouldContinue = false
+      break
     }
   }
 }
