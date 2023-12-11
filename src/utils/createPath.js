@@ -1,23 +1,23 @@
-import fs from 'node:fs'
-import { promisify } from 'node:util'
+import fs from "node:fs";
+import { promisify } from "node:util";
+import { log } from "./log.js";
 
-const access = promisify(fs.access)
-const mkdir = promisify(fs.mkdir)
+const access = promisify(fs.access);
+const mkdir = promisify(fs.mkdir);
 
-export async function createPath() {
-  const path = './downloads'
+export async function createPath(path) {
 
   try {
-    await access(path, fs.constants.F_OK)
-    console.log('Pasta já existe!')
+    await access(path, fs.constants.F_OK);
+    log(`folder ${path} exist`);
   } catch (err) {
     try {
-      await mkdir(path)
-      console.log('Pasta criada com sucesso!')
+      await mkdir(path);
+      log(`${path} is created with success`);
     } catch (mkdirErr) {
-      console.error('Erro ao criar a pasta:', mkdirErr)
+      log(`${path} error on create, see error below\n${mkdirErr}`);
     }
   }
 
-  return path
+  return path;
 }

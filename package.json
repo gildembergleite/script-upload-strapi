@@ -5,7 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node --env-file=.env ./src/index.js"
+    "dev": "rm -rf logs.txt && node --env-file=.env ./src/index.js"
   },
   "keywords": [],
   "author": "Gildemberg Leite <gildembergleite@gmail.com> (http://gildembergleite@gmail.com/)",

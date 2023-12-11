@@ -1,24 +1,22 @@
 import fs from "node:fs";
 import { log } from "./log.js";
 
-export async function uploadPdf(refID, fileName) {
+export async function uploadFile(refID, fileName) {
   try {
-    const PATH = `./downloads/${fileName}.pdf`;
+    const PATH_IMAGE = `./downloads/${fileName}.jpg`;
+    const PATH_PDF = `./downloads/${fileName}.pdf`;
 
-    if (!fs.existsSync(PATH)) {
-      log("Uploaded fail: " + `${fileName}.pdf ` + "Not downloaded");
-      return false;
-    }
+    const bufferImage = fs.readFileSync(PATH_IMAGE);
+    const bufferPdf = fs.readFileSync(PATH_PDF);
 
-    log("Upload pdf: " + `${fileName}.pdf`);
-    const buffer = fs.readFileSync(PATH);
-    const blob = new Blob([buffer], { type: "application/pdf" });
+    const blobImage = new Blob([bufferImage], { type: "image/jpeg" });
+    const blobPdf = new Blob([bufferPdf], { type: "application/pdf" });
 
     const formData = new FormData();
     formData.append("ref", "api::download.download");
     formData.append("refId", refID);
-    formData.append("field", "Arquivo");
-    formData.append("files", blob, `${fileName}.pdf`);
+    formData.append("files.Thumb", blobImage, `${fileName}.jpg`);
+    formData.append("files.Arquivo", blobPdf, `${fileName}.pdf`);
     formData.append("path", "catalogo-colecoes/pdfs");
 
     const response = await fetch(process.env.UPLOAD_ENDPOINT, {
